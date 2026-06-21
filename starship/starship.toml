@@ -1,0 +1,74 @@
+format = "$directory$git_branch$git_status$character"
+
+# $fill\
+# $lua\
+# $python\
+# $jobs\
+# $cmd_duration\
+# $line_break\
+palette = 'onedark'
+
+[jobs]
+symbol = ' '
+style = 'red'
+number_threshold = 1
+format = '[$symbol]($style)'
+
+[directory]
+style = 'fg:blue'
+truncate_to_repo = false
+truncation_length = 0
+
+[character]
+success_symbol = '[❯](pink)'
+
+[git_branch]
+symbol = ' '
+style = 'fg:gray'
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
+[fill]
+symbol = ' '
+
+[lua]
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[nodejs]
+style = 'blue'
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[golang]
+style = 'blue'
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[haskell]
+style = 'blue'
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[rust]
+style = 'orange'
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[ruby]
+style = 'blue'
+symbol = ' '
+format = '[$symbol($version )]($style)'
+
+[package]
+symbol = '󰏗 '
+
+[python]
+style = 'fg:yellow'
+symbol = '  '
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[palettes.onedark]
+blue='#66c2ff'
+yellow='#e5c07b'
+gray='#828997'
+pink='#ff4da6'
