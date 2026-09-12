@@ -9,6 +9,7 @@ vim.keymap.set("n", "<leader>;", function()
 end, { desc = "Dashboard" })
 
 -- PERF: Run commands
+vim.keymap.set("n", "<leader>rp", function() vim.cmd([[RunPython]]) end, { desc = "Run Python" })
 vim.keymap.set("n", "<leader>rc", function() vim.cmd([[RunCpp]]) end, { desc = "Compile and run C++" })
 
 -- PERF: Smart delete
@@ -93,6 +94,11 @@ vim.keymap.set("n", "<leader>cg", function() vim.cmd([[lua vim.lsp.buf.definitio
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename variable" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code actions" })
 vim.keymap.set("n", "<leader>cd", function() vim.cmd([[Trouble]]) end, { desc = "Diagnostics using Trouble" })
+vim.keymap.set("n", "<leader>la", function() vim.cmd([[InspectTree]]) end, { desc = "open an ast (abstract syntax tere)" })
+
+-- PERF: Lspsaga
+vim.keymap.set("n", "<leader>ld", function() vim.cmd([[Lspsaga finder def]]) end, { desc = "Find definition" })
+vim.keymap.set("n", "<leader>lr", function() vim.cmd([[Lspsaga finder ref]]) end, { desc = "Find references" })
 vim.keymap.set("n", "<leader>la", function() vim.cmd([[InspectTree]]) end, { desc = "open an ast (abstract syntax tere)" })
 
 -- PERF: file explorer

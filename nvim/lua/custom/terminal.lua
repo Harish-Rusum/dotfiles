@@ -1,5 +1,5 @@
 -- ============================================
--- Floating Terminal + RunCpp
+-- Floating Terminal + RunCpp + RunPython
 -- ============================================
 
 local state = {
@@ -98,3 +98,20 @@ vim.api.nvim_create_user_command("RunCpp", function()
   toggle_terminal({ args = compile_cmd })
 end, {})
 
+
+-- --------------------------------------------
+-- User Command: :RunPython
+-- Runs current file with python3
+-- --------------------------------------------
+vim.api.nvim_create_user_command("RunPython", function()
+  local file = vim.fn.expand("%")
+
+  if file == "" then
+    print("No file detected.")
+    return
+  end
+
+  local run_cmd = string.format("python3 %s", file)
+
+  toggle_terminal({ args = run_cmd })
+end, {})
