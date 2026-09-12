@@ -1,5 +1,7 @@
 return {
 	'nvimdev/lspsaga.nvim',
+	event = 'LspAttach',
+	cmd = 'Lspsaga',
 	config = function()
 		require('lspsaga').setup({
 			symbol_in_winbar = {

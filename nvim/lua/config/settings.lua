@@ -23,7 +23,6 @@ opt.inccommand = "split"
 opt.scrolloff = 10
 opt.showmode = false
 opt.cmdheight = 0
-opt.inccommand = "split"
 opt.list = true
 opt.listchars = { tab = "▎ ", trail = "·", nbsp = "␣" }
 opt.undofile = true
@@ -75,34 +74,37 @@ set_indent("lua", 2, 2)
 set_indent("python", 4, 4)
 set_indent("cpp", 4, 4)
 
-vim.cmd("Copilot disable")
+pcall(vim.cmd, "Copilot disable")
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    local hl = vim.hl or vim.highlight
+    hl.on_yank()
   end,
 })
 
-local signs = {
-  Error = "󰅙 ",
-  Warn  = " ",
-  Info  = " ",
-}
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+-- LSP logging off by default; the log had grown to hundreds of MB.
+if vim.lsp.log and vim.lsp.log.set_level then
+  vim.lsp.log.set_level(vim.log.levels.OFF)
+else
+  vim.lsp.set_log_level(vim.log.levels.OFF)
 end
 
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = "",
-    spacing = 2,
-    severity = { min = vim.diagnostic.severity.WARN },
-  },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-})
+-- Inlay hints: Neovim builtin (replaces inlay-hints.nvim, which used the
+-- removed vim.validate{<table>} form).
+local function inlay_hints(enabled)
+  vim.lsp.inlay_hint.enable(enabled, { bufnr = 0 })
+end
+
+vim.api.nvim_create_user_command("InlayHintsEnable", function()
+  inlay_hints(true)
+end, { desc = "Enable inlay hints in this buffer" })
+
+vim.api.nvim_create_user_command("InlayHintsDisable", function()
+  inlay_hints(false)
+end, { desc = "Disable inlay hints in this buffer" })
+
+vim.api.nvim_create_user_command("InlayHintsToggle", function()
+  inlay_hints(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
+end, { desc = "Toggle inlay hints in this buffer" })

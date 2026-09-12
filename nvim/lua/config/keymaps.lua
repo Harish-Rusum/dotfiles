@@ -23,7 +23,7 @@ vim.keymap.set('i', '<S-Tab>', 'copilot#Accept("\\<CR>")', {
 vim.g.copilot_no_tab_map = true
 
 -- PERF: Notifications
-vim.api.nvim_set_keymap("n", "<leader>nc", ':lua require("notify").dismiss()<CR>', { noremap = true, silent = true, desc = "Clear notifications" })
+vim.keymap.set("n", "<leader>nc", function() Snacks.notifier.hide() end, { silent = true, desc = "Clear notifications" })
 
 -- PERF: splits
 vim.keymap.set("n", "<leader>s[", function() vim.cmd([[vsplit]]) end, { desc = "split vertically" })
@@ -31,10 +31,9 @@ vim.keymap.set("n", "<leader>s]", function() vim.cmd([[sp]]) end, { desc = "spli
 
 -- PERF: setting up terminal keymaps
 vim.keymap.set({"n","t"}, "<C-t>", function() vim.cmd([[Floaterminal]]) end, { desc = "Floating terminal" })
-vim.keymap.set("n", "<C-[>", function() vim.cmd("ToggleTerm direction=vertical size=70") end)
-vim.keymap.set("t", "<C-[>", function() vim.cmd("ToggleTerm direction=vertical size=70") end)
-vim.keymap.set("n", "<C-]>", function() vim.cmd("ToggleTerm direction=horizontal size=20") end)
-vim.keymap.set("t", "<C-]>", function() vim.cmd("ToggleTerm direction=horizontal size=20") end)
+-- NOTE: <C-[> is the same byte as <Esc>, so it can never get its own mapping.
+vim.keymap.set({ "n", "t" }, "<leader>tv", function() vim.cmd("ToggleTerm direction=vertical size=70") end, { desc = "Vertical terminal" })
+vim.keymap.set({ "n", "t" }, "<leader>th", function() vim.cmd("ToggleTerm direction=horizontal size=20") end, { desc = "Horizontal terminal" })
 
 -- PERF: setting up terminal keymaps
 -- vim.keymap.set("n", "<leader>is", function() vim.cmd([[IBLToggleScope]]) end, { desc = "Toggle highlighting scope" })
@@ -94,12 +93,11 @@ vim.keymap.set("n", "<leader>cg", function() vim.cmd([[lua vim.lsp.buf.definitio
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename variable" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code actions" })
 vim.keymap.set("n", "<leader>cd", function() vim.cmd([[Trouble]]) end, { desc = "Diagnostics using Trouble" })
-vim.keymap.set("n", "<leader>la", function() vim.cmd([[InspectTree]]) end, { desc = "open an ast (abstract syntax tere)" })
 
 -- PERF: Lspsaga
 vim.keymap.set("n", "<leader>ld", function() vim.cmd([[Lspsaga finder def]]) end, { desc = "Find definition" })
 vim.keymap.set("n", "<leader>lr", function() vim.cmd([[Lspsaga finder ref]]) end, { desc = "Find references" })
-vim.keymap.set("n", "<leader>la", function() vim.cmd([[InspectTree]]) end, { desc = "open an ast (abstract syntax tere)" })
+vim.keymap.set("n", "<leader>la", function() vim.cmd([[InspectTree]]) end, { desc = "Open the AST (abstract syntax tree)" })
 
 -- PERF: file explorer
 vim.keymap.set("n", "e", function() vim.cmd([[Oil]]) end, { desc = "Open parent directory" })
@@ -146,7 +144,7 @@ vim.keymap.set("c", "W", "w")
 vim.keymap.set("c", "Q", "q")
 vim.keymap.set("n", "<leader>w", function() vim.cmd([[w]]) end, { desc = "save file" })
 vim.keymap.set("n", "<leader>q", function() vim.cmd([[q!]]) end, { desc = "quit file" })
-vim.keymap.set("n", "<leader>cp", function() vim.cmd([[Glow %]]) end, { desc = "Preview markdown files" })
+vim.keymap.set("n", "<leader>cp", function() vim.cmd([[RenderMarkdown toggle]]) end, { desc = "Preview markdown files" })
 vim.keymap.set("i", "<C-w>", "<C-o>diw", { desc = "Delete a word backwards in insert mode", silent = true })
 vim.keymap.set("v", ">", ">gv", { silent = true })
 vim.keymap.set("v", "<", "<gv", { silent = true })

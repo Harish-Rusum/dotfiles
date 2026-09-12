@@ -8,7 +8,7 @@ return {
 		dashboard = {
 			preset = {
 				pick = function(cmd, opts)
-					return LazyVim.pick(cmd, opts)()
+					return Snacks.dashboard.pick(cmd, opts)
 				end,
 				-- header = [[
 				--      ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
